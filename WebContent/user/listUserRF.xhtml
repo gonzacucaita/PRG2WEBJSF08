@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:outputStylesheet>
+        .rf-dt{
+            width:400px;
+        }
+        .tooltip-text {
+            width: 50px;
+            height: 20px;
+            cursor: arrow;
+            border-width: 2px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .acent{
+            text-align: center;
+        }
+    </h:outputStylesheet>
+	<f:view>
+		<h:head>
+			<title>Gestión de Usuarios</title>
+		</h:head>
+		<h:body>
+
+			<h:form>
+				<h:panelGrid columnClasses="acent">
+					<rich:dataScroller for="tablaPaginada" maxPages="5" fastStep="3" />
+					<rich:dataTable value="#{userBean.listarUsuarios}" var="usuario"
+						id="tablaPaginada" width="1000px" rows="3">
+						<f:facet name="header">
+							<h:outputText value="Lista de Usuarios" />
+						</f:facet>
+						<rich:column sortBy="#{usuario.id}">
+							<f:facet name="header">
+								<h:outputText value="Id" />
+							</f:facet>
+							<h:outputText value="#{usuario.id}" />
+						</rich:column>
+						<rich:column sortBy="#{usuario.userName}">
+							<f:facet name="header">
+								<h:outputText value="User Name" />
+							</f:facet>
+							<h:outputText value="#{usuario.userName}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Password" />
+							</f:facet>
+							<h:outputText value="*******" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Full Name" />
+							</f:facet>
+							<h:outputText value="#{usuario.fullName}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="E-mail" />
+							</f:facet>
+							<h:outputText value="#{usuario.emailAddress}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Phone Number" />
+							</f:facet>
+							<h:outputText value="#{usuario.phoneNumber}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Date Last Password" />
+							</f:facet>
+							<h:outputText value="#{usuario.dateLastPassword}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="User Type" />
+							</f:facet>
+							<h:outputText value="#{usuario.userType}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Active" />
+							</f:facet>
+							<h:outputText value="Activo" rendered="#{'A' eq usuario.active}" />
+							<h:outputText value="InActivo"
+								rendered="#{'I' eq usuario.active}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Modificar" />
+							</f:facet>
+							<h:form>
+								<a4j:commandButton image="/img/page_edit.png"
+									action="#{userBean.prepararModificarUsuario}">
+									<rich:tooltip followMouse="true" showDelay="200">
+										<p class="tooltip-text">Editar</p>
+									</rich:tooltip>
+								</a4j:commandButton>
+							</h:form>
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="Eliminar" />
+							</f:facet>
+							<h:form>
+								<a4j:commandButton image="/img/bin_closed_16.png"
+									action="#{userBean.eliminarUsuario}">
+									<rich:tooltip followMouse="true" showDelay="200">
+										<p class="tooltip-text">Eliminar</p>
+									</rich:tooltip>
+								</a4j:commandButton>
+							</h:form>
+						</rich:column>
+
+					</rich:dataTable>
+					<rich:dataScroller for="tablaPaginada" maxPages="5" fastStep="3" />
+					<h:form>
+						<a4j:commandButton image="/img/add.png"
+							action="#{userBean.prepararAdicionarUsuario}">
+							<rich:tooltip followMouse="true" showDelay="200">
+								<p class="tooltip-text">Agregar</p>
+							</rich:tooltip>
+						</a4j:commandButton>
+					</h:form>
+				</h:panelGrid>
+			</h:form>
+		</h:body>
+	</f:view>
+</ui:composition>
